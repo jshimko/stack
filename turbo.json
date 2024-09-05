@@ -60,6 +60,10 @@
       "persistent": true,
       "cache": false
     },
+    "prisma-studio": {
+      "persistent": true,
+      "cache": false
+    },
     "start": {
       "persistent": true,
       "cache": false

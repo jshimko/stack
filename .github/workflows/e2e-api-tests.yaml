@@ -64,8 +64,8 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Start Docker Compose
-        run: docker compose -f dependencies.compose.yaml up -d
+      - name: Start Docker Compose dependencies
+        run: pnpm deps:init
 
       - name: Wait on Postgres
         run: npx wait-on tcp:localhost:5432
@@ -121,4 +121,4 @@ jobs:
 
       - name: Print Docker Compose logs
         if: always()
-        run: docker compose -f dependencies.compose.yaml logs
+        run: docker compose logs -f

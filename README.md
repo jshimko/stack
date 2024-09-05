@@ -104,7 +104,7 @@ Pre-populated .env files for the setup below are available and used by default i
 In a terminal, start the dependencies (Postgres and Inbucket) as Docker containers:
 
 ```sh
-docker compose -f dependencies.compose.yaml up
+pnpm deps:init
 ```
 
 Then open a new terminal:
@@ -115,14 +115,10 @@ pnpm install
 # Run build to build everything once
 pnpm run build
 
-# initialize the database and seed it with some data
-pnpm prisma db push
-pnpm prisma db seed
-
 # Run code generation (repeat this after eg. changing the Prisma schema). This is part of the build script, but faster
 pnpm run codegen
 
-# Start the dev server
+# migrate the database and seed it with some data, then start the dev server
 pnpm run dev
 
 # In a different terminal, run tests in watch mode

@@ -4,6 +4,7 @@
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as cookie from "cookie";
+import { env } from "next-runtime-env";
 import * as NextNavigationUnscrambled from "next/navigation";
 // import the entire module to get around some static compiler warnings emitted by Next.js in some cases
 import React, { useCallback, useMemo } from "react";
@@ -125,7 +126,7 @@ async function _redirectTo(url: URL | string, options?: { replace?: boolean }) {
 
 function getDefaultProjectId() {
   return (
-    process.env.NEXT_PUBLIC_STACK_PROJECT_ID ||
+    env("NEXT_PUBLIC_STACK_PROJECT_ID") ||
     throwErr(
       new Error(
         "Welcome to Stack! It seems that you haven't provided a project ID. Please create a project on the Stack dashboard at https://app.stack-auth.com and put it in the NEXT_PUBLIC_STACK_PROJECT_ID environment variable.",
@@ -136,7 +137,7 @@ function getDefaultProjectId() {
 
 function getDefaultPublishableClientKey() {
   return (
-    process.env.NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY ||
+    env("NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY") ||
     throwErr(
       new Error(
         "Welcome to Stack! It seems that you haven't provided a publishable client key. Please create an API key for your project on the Stack dashboard at https://app.stack-auth.com and copy your publishable client key into the NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY environment variable.",
@@ -168,7 +169,7 @@ function getDefaultSuperSecretAdminKey() {
 }
 
 function getDefaultBaseUrl() {
-  return process.env.NEXT_PUBLIC_STACK_URL || defaultBaseUrl;
+  return env("NEXT_PUBLIC_STACK_URL") || defaultBaseUrl;
 }
 
 export type StackClientAppConstructorOptions<HasTokenStore extends boolean, ProjectId extends string> = {

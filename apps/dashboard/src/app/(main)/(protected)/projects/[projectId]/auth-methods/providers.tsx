@@ -1,5 +1,6 @@
 "use client";
 
+import { env } from "next-runtime-env";
 import { useState } from "react";
 import * as yup from "yup";
 import { AdminProject } from "@stackframe/stack";
@@ -101,7 +102,7 @@ export function ProviderSettingDialog(props: Props & { open: boolean; onClose: (
             <div className="flex flex-col gap-2">
               <Label>Redirect URL for the OAuth provider settings</Label>
               <Typography type="footnote">
-                <InlineCode>{`${process.env.NEXT_PUBLIC_STACK_URL}/api/v1/auth/oauth/callback/${props.id}`}</InlineCode>
+                <InlineCode>{`${env("NEXT_PUBLIC_STACK_URL")}/api/v1/auth/oauth/callback/${props.id}`}</InlineCode>
               </Typography>
             </div>
           )}

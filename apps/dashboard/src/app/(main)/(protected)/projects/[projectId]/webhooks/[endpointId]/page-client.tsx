@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { env } from "next-runtime-env";
 import { useMemo, useState } from "react";
 import { SvixProvider, useEndpoint, useEndpointFunctions, useEndpointMessageAttempts, useEndpointSecret } from "svix-react";
 import { runAsynchronously } from "@stackframe/stack-shared/dist/utils/promises";
@@ -205,7 +206,7 @@ export default function PageClient(props: { endpointId: string }) {
     <SvixProvider
       token={svixTokenUpdated}
       appId={stackAdminApp.projectId}
-      options={{ serverUrl: process.env.NEXT_PUBLIC_STACK_SVIX_SERVER_URL }}
+      options={{ serverUrl: env("NEXT_PUBLIC_STACK_SVIX_SERVER_URL") }}
     >
       <PageInner endpointId={props.endpointId} />
     </SvixProvider>

@@ -1,5 +1,7 @@
+/* eslint-disable no-restricted-syntax */
 import { PrismaClient } from "@prisma/client";
 import { throwErr } from "@stackframe/stack-shared/dist/utils/errors";
+import { hashPassword } from "@stackframe/stack-shared/dist/utils/password";
 
 const prisma = new PrismaClient();
 
@@ -16,6 +18,13 @@ async function seed() {
   if (oldProject) {
     console.log("Internal project already exists, skipping its creation");
   } else {
+    // Optional default admin user
+    const adminEmail = process.env.STACK_DEFAULT_ADMIN_EMAIL;
+    const adminPassword = process.env.STACK_DEFAULT_ADMIN_PASSWORD;
+
+    // Optionally disable sign up
+    const signUpEnabled = process.env.STACK_SIGN_UP_DISABLED !== "true";
+
     createdProject = await prisma.project.upsert({
       where: {
         id: "internal",
@@ -59,12 +68,27 @@ async function seed() {
                 },
               },
             },
+            signUpEnabled,
             credentialEnabled: true,
             magicLinkEnabled: true,
             createTeamOnSignUp: false,
             clientTeamCreationEnabled: true,
           },
         },
+        users:
+          adminEmail && adminPassword
+            ? {
+                create: [
+                  {
+                    displayName: "Admin user",
+                    primaryEmail: adminEmail,
+                    passwordHash: await hashPassword(adminPassword),
+                    primaryEmailVerified: true,
+                    authWithEmail: true,
+                  },
+                ],
+              }
+            : undefined,
       },
       update: {},
     });
@@ -119,6 +143,8 @@ seed()
     console.error(e);
     await prisma.$disconnect();
     process.exit(1);
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises, @typescript-eslint/return-await
   })
-  .finally(async () => await prisma.$disconnect());
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

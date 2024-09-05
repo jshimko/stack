@@ -1,5 +1,6 @@
 "use client";
 
+import { env } from "next-runtime-env";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { SvixProvider, useEndpoints, useSvix } from "svix-react";
@@ -197,7 +198,7 @@ export default function PageClient() {
       <SvixProvider
         token={svixTokenUpdated}
         appId={stackAdminApp.projectId}
-        options={{ serverUrl: process.env.NEXT_PUBLIC_STACK_SVIX_SERVER_URL }}
+        options={{ serverUrl: env("NEXT_PUBLIC_STACK_SVIX_SERVER_URL") }}
       >
         <Endpoints updateFn={() => setUpdateCounter((x) => x + 1)} />
       </SvixProvider>

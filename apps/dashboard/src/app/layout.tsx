@@ -3,11 +3,11 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
+import { PublicEnvScript, env } from "next-runtime-env";
 import dynamic from "next/dynamic";
 import { Inter as FontSans } from "next/font/google";
 import React from "react";
 import { StackProvider, StackTheme } from "@stackframe/stack";
-import { getEnvVariable } from "@stackframe/stack-shared/dist/utils/env";
 import { Toaster } from "@stackframe/stack-ui";
 import { DevErrorNotifier } from "@/components/dev-error-notifier";
 import { RouterProvider } from "@/components/router";
@@ -21,7 +21,7 @@ import "./globals.css";
 import { CSPostHogProvider, UserIdentity } from "./providers";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_STACK_URL_DEPRECATED || ""),
+  metadataBase: new URL(env("NEXT_PUBLIC_STACK_URL_DEPRECATED") || ""),
   title: {
     default: "Stack Auth Dashboard",
     template: "%s | Stack Auth",
@@ -30,12 +30,12 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Stack Auth Dashboard",
     description: "Stack Auth is the open-source Auth0 alternative, and the fastest way to add authentication to your web app.",
-    images: [`${process.env.NEXT_PUBLIC_STACK_URL_DEPRECATED}/open-graph-image.png`],
+    images: [`${env("NEXT_PUBLIC_STACK_URL_DEPRECATED")}/open-graph-image.png`],
   },
   twitter: {
     title: "Stack Auth Dashboard",
     description: "Stack Auth is the open-source Auth0 alternative, and the fastest way to add authentication to your web app.",
-    images: [`${process.env.NEXT_PUBLIC_STACK_URL_DEPRECATED}/open-graph-image.png`],
+    images: [`${env("NEXT_PUBLIC_STACK_URL_DEPRECATED")}/open-graph-image.png`],
   },
 };
 
@@ -55,11 +55,12 @@ const PageView = dynamic(() => import("./pageview"), {
 });
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const headTags: TagConfigJson[] = JSON.parse(getEnvVariable("NEXT_PUBLIC_STACK_HEAD_TAGS"));
+  const headTags: TagConfigJson[] = JSON.parse(env("NEXT_PUBLIC_STACK_HEAD_TAGS") || "[]");
 
   return (
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`} suppressHydrationWarning>
       <head>
+        <PublicEnvScript />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <StyleLink href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded&display=block" />
         <StyleLink
