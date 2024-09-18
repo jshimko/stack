@@ -29,6 +29,9 @@ RUN turbo prune --scope=@stackframe/stack-dashboard --docker
 # Build stage
 FROM base AS builder
 
+ARG NEXT_PUBLIC_DISABLE_TELEMETRY=true
+ENV NEXT_PUBLIC_DISABLE_TELEMETRY=${NEXT_PUBLIC_DISABLE_TELEMETRY}
+
 # copy over pruned files and install dependencies
 COPY .gitignore .
 COPY --from=pruner /app/out/json/ .

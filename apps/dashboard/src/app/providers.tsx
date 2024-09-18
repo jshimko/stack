@@ -8,7 +8,7 @@ import { Suspense, useEffect, useState } from 'react';
 if (typeof window !== 'undefined') {
   const postHogKey = env("NEXT_PUBLIC_POSTHOG_KEY") ?? "phc_vIUFi0HzHo7oV26OsaZbUASqxvs8qOmap1UBYAutU4k";
 
-  if (postHogKey.length > 5) {
+  if (postHogKey.length > 5 && env("NEXT_PUBLIC_DISABLE_TELEMETRY") !== "true") {
     posthog.init(postHogKey, {
       api_host: "/consume",
       ui_host: "https://eu.i.posthog.com",
@@ -31,6 +31,9 @@ function UserIdentityInner() {
   const user = useUser();
 
   useEffect(() => {
+    if (env("NEXT_PUBLIC_DISABLE_TELEMETRY") === "true") {
+      return;
+    }
     if (user && user.id !== lastUserId) {
       posthog.identify(user.id, {
         primaryEmail: user.primaryEmail,

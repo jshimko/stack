@@ -96,8 +96,8 @@ const nextConfig = {
   },
 };
 
-export default withConfiguredSentryConfig(
-  withBundleAnalyzer(
-    nextConfig
-  )
-);
+export default process.env.NEXT_PUBLIC_DISABLE_TELEMETRY === "true" ?
+  withBundleAnalyzer(nextConfig) :
+  withConfiguredSentryConfig(
+    withBundleAnalyzer(nextConfig)
+  );

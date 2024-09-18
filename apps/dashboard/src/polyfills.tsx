@@ -2,12 +2,16 @@ import * as util from "util";
 import { captureError, registerErrorSink } from "@stackframe/stack-shared/dist/utils/errors";
 import * as Sentry from "@sentry/nextjs";
 import { getNodeEnvironment } from "@stackframe/stack-shared/dist/utils/env";
+import { env } from "next-runtime-env";
 
 const sentryErrorSink = (location: string, error: unknown) => {
   Sentry.captureException(error, { extra: { location } });
 };
 
 export function ensurePolyfilled() {
+  if (env("NEXT_PUBLIC_DISABLE_TELEMETRY") === "true") {
+    return;
+  }
   registerErrorSink(sentryErrorSink);
   // not all environments have default options for util.inspect
   if ("inspect" in util && "defaultOptions" in util.inspect) {

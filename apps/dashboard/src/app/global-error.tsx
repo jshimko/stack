@@ -1,6 +1,7 @@
 "use client";
 
 import * as Sentry from "@sentry/nextjs";
+import { env } from "next-runtime-env";
 import { Spinner } from "@stackframe/stack-ui";
 import Error from "next/error";
 import { useEffect } from "react";
@@ -9,6 +10,7 @@ export default function GlobalError({ error }: any) {
   const isProdLike = process.env.NODE_ENV.includes("production");
 
   useEffect(() => {
+    if (env("NEXT_PUBLIC_DISABLE_TELEMETRY") === "true") return;
     Sentry.captureException(error);
   }, [error]);
 

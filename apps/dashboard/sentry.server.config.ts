@@ -4,37 +4,40 @@
 
 import * as Sentry from "@sentry/nextjs";
 import { nicify } from "@stackframe/stack-shared/dist/utils/strings";
+import { env } from "next-runtime-env";
 
-Sentry.init({
-  dsn: "https://6e618f142965a385267f1030793e0400@o4507084192022528.ingest.us.sentry.io/4507084192219136",
+if (env("NEXT_PUBLIC_DISABLE_TELEMETRY") !== "true") {
+  Sentry.init({
+    dsn: "https://6e618f142965a385267f1030793e0400@o4507084192022528.ingest.us.sentry.io/4507084192219136",
 
-  // Adjust this value in production, or use tracesSampler for greater control
-  tracesSampleRate: 1,
+    // Adjust this value in production, or use tracesSampler for greater control
+    tracesSampleRate: 1,
 
-  // Setting this option to true will print useful information to the console while you're setting up Sentry.
-  debug: false,
+    // Setting this option to true will print useful information to the console while you're setting up Sentry.
+    debug: false,
 
-  enabled: process.env.NODE_ENV !== "development" && !process.env.CI,
+    enabled: process.env.NODE_ENV !== "development" && !process.env.CI,
 
-  // Add exception metadata to the event
-  beforeSend(event, hint) {
-    const error = hint.originalException;
-    let nicified;
-    try {
-      nicified = nicify(error);
-    } catch (e) {
-      nicified = `Error occurred during nicification: ${e}`;
-    }
-    if (error instanceof Error) {
-      event.extra = {
-        ...event.extra,
-        cause: error.cause,
-        errorProps: {
-          ...error,
-        },
-        nicifiedError: nicify(error),
-      };
-    }
-    return event;
-  },
-});
+    // Add exception metadata to the event
+    beforeSend(event, hint) {
+      const error = hint.originalException;
+      let nicified;
+      try {
+        nicified = nicify(error);
+      } catch (e) {
+        nicified = `Error occurred during nicification: ${e}`;
+      }
+      if (error instanceof Error) {
+        event.extra = {
+          ...event.extra,
+          cause: error.cause,
+          errorProps: {
+            ...error,
+          },
+          nicifiedError: nicify(error),
+        };
+      }
+      return event;
+    },
+  });
+}

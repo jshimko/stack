@@ -3,12 +3,16 @@
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { usePostHog } from 'posthog-js/react';
+import { env } from "next-runtime-env";
 
 export default function PostHogPageView(): null {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const posthog = usePostHog();
   useEffect(() => {
+    if (env("NEXT_PUBLIC_DISABLE_TELEMETRY") === "true") {
+      return;
+    }
     if (pathname) {
       let url = window.origin + pathname;
       if (searchParams.toString()) {

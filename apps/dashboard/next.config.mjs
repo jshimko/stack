@@ -90,7 +90,7 @@ const nextConfig = {
       },
     ];
   },
-  skipTrailingSlashRedirect: true, 
+  skipTrailingSlashRedirect: true,
 
 
   async headers() {
@@ -128,6 +128,8 @@ const nextConfig = {
   },
 };
 
-export default withConfiguredSentryConfig(
-  withBundleAnalyzer(withMDX(nextConfig))
-);
+export default process.env.NEXT_PUBLIC_DISABLE_TELEMETRY === "true" ?
+  withBundleAnalyzer(withMDX(nextConfig)) :
+  withConfiguredSentryConfig(
+    withBundleAnalyzer(withMDX(nextConfig))
+  );

@@ -5,9 +5,11 @@
 
 import * as Sentry from "@sentry/nextjs";
 import { nicify } from "@stackframe/stack-shared/dist/utils/strings";
+import { env } from "next-runtime-env";
 
-Sentry.init({
-  dsn: "https://6e618f142965a385267f1030793e0400@o4507084192022528.ingest.us.sentry.io/4507084192219136",
+if (env("NEXT_PUBLIC_DISABLE_TELEMETRY") !== "true") {
+  Sentry.init({
+    dsn: "https://6e618f142965a385267f1030793e0400@o4507084192022528.ingest.us.sentry.io/4507084192219136",
 
   // Adjust this value in production, or use tracesSampler for greater control
   tracesSampleRate: 1,
@@ -36,6 +38,7 @@ Sentry.init({
         nicifiedError: nicify(error),
       };
     }
-    return event;
-  },
-});
+      return event;
+    },
+  });
+}
