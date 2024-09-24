@@ -23,7 +23,7 @@
     "watch-docs": "pnpm run with-env tsx watch --clear-screen=false scripts/generate-docs.ts",
     "generate-docs": "pnpm run with-env tsx scripts/generate-docs.ts",
     "generate-keys": "pnpm run with-env tsx scripts/generate-keys.ts",
-    "seed-self-host": "pnpm run with-env tsx prisma/seed-self-host.ts"
+    "seed-self-host": "tsx prisma/seed-self-host.ts"
   },
   "prisma": {
     "seed": "pnpm run with-env tsx prisma/seed.ts"
@@ -60,6 +60,7 @@
     "pg": "^8.11.3",
     "posthog-node": "^4.1.0",
     "react": "^18.2",
+    "semver": "^7.6.3",
     "server-only": "^0.0.1",
     "sharp": "^0.32.6",
     "svix": "^1.25.0",
@@ -70,6 +71,7 @@
     "@types/node": "^20.8.10",
     "@types/nodemailer": "^6.4.14",
     "@types/react": "^18.2.66",
+    "@types/semver": "^7.5.8",
     "concurrently": "^8.2.2",
     "glob": "^10.4.1",
     "prisma": "^5.19.1",
