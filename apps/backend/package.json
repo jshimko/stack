@@ -17,7 +17,7 @@
     "codegen:watch": "concurrently -n \"prisma,docs\" -k \"pnpm run codegen-prisma:watch\" \"pnpm run watch-docs\"",
     "psql-inner": "psql $STACK_DATABASE_CONNECTION_STRING",
     "psql": "pnpm run with-env pnpm run psql-inner",
-    "prisma": "pnpm run with-env prisma",
+    "prisma": "prisma",
     "prisma-studio": "pnpm run with-env prisma studio --port 8106 --browser none",
     "lint": "next lint",
     "watch-docs": "pnpm run with-env tsx watch --clear-screen=false scripts/generate-docs.ts",
