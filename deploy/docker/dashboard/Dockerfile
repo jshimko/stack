@@ -32,17 +32,18 @@ FROM base AS builder
 ARG NEXT_PUBLIC_DISABLE_TELEMETRY=true
 ENV NEXT_PUBLIC_DISABLE_TELEMETRY=${NEXT_PUBLIC_DISABLE_TELEMETRY}
 
-# copy over pruned files and install dependencies
-COPY .gitignore .
+# copy over package.json files and install dependencies
 COPY --from=pruner /app/out/json/ .
 COPY --from=pruner /app/out/pnpm-lock.yaml .
+COPY .gitignore .
 COPY pnpm-workspace.yaml .
 COPY turbo.json .
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
+# copy over the rest of the code for the build
 COPY --from=pruner /app/out/full/ .
 
-# The following values are required for the NextJS build, but they can/should all be overridden at runtime.
+# The following values are required for the NextJS build, but they should all be overridden at runtime.
 ENV NEXT_PUBLIC_STACK_URL_DEPRECATED=http://localhost:8101
 ENV NEXT_PUBLIC_STACK_URL=http://localhost:8102
 ENV NEXT_PUBLIC_STACK_SVIX_SERVER_URL=http://localhost:8113
@@ -72,6 +73,8 @@ COPY --from=builder --chown=node:node /app/apps/dashboard/.next/standalone ./
 COPY --from=builder --chown=node:node /app/apps/dashboard/.next/static ./apps/dashboard/.next/static
 COPY --from=builder --chown=node:node /app/apps/dashboard/public ./apps/dashboard/public
 
+WORKDIR /app/apps/dashboard
+
 ENV NODE_ENV=production
 
 ENV PORT=8101
@@ -79,4 +82,4 @@ EXPOSE 8101
 
 USER node
 
-CMD ["node", "apps/dashboard/server.js"]
+CMD ["node", "server.js"]
