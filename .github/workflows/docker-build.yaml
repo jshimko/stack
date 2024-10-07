@@ -83,3 +83,31 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+  deploy-dev:
+    name: Deploy Development
+    if: github.ref == 'refs/heads/self-host'
+    runs-on: ubuntu-latest
+    needs:
+      - build-dashboard
+      - build-backend
+    steps:
+      - name: Checkout the deployments repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ secrets.GITOPS_DEPLOYMENTS_REPO }}
+          token: ${{ secrets.ORG_REPO_ACCESS_PAT }}
+
+      - name: Update dev image tag
+        run: |
+          # update the image tag in the dev values file
+          TAG=$(echo ${{ github.sha }} | cut -c1-7)
+          sed -i 's/jshimko\/stack-dashboard:.*/jshimko\/stack-dashboard:'"$TAG"'/' stack-auth/values/dev.yaml
+          sed -i 's/jshimko\/stack-backend:.*/jshimko\/stack-backend:'"$TAG"'/' stack-auth/values/dev.yaml
+
+          # commit and push the change to the deployments repo
+          git config user.name "Github Actions" --local
+          git config user.email github@example.com --local
+          git add .
+          git commit -m "[dev] Update Stack Auth image tags to $TAG"
+          git push
