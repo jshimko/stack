@@ -89,7 +89,7 @@ export function AuthPage(props: {
             <TabsList className={cn('w-full mb-2', {
               'flex-row-reverse': props.firstTab === 'password'
             })}>
-              <TabsTrigger value='magic-link' className='flex-1'>{t("Email")}</TabsTrigger>
+              <TabsTrigger value='magic-link' className='flex-1'>{t("Magic Link")}</TabsTrigger>
               <TabsTrigger value='password' className='flex-1'>{t("Email & Password")}</TabsTrigger>
             </TabsList>
             <TabsContent value='magic-link'>
