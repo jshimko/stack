@@ -5,7 +5,7 @@ on:
     branches:
       - "**"
     tags:
-      - "*.*.*"
+      - "v*.*.*"
 
 jobs:
   build-dashboard:
@@ -23,7 +23,7 @@ jobs:
           tags: |
             type=ref,event=branch
             type=sha,prefix=
-            type=match,pattern=\d.\d.\d
+            type=match,pattern=v\d.\d.\d
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
