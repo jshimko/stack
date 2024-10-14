@@ -2,7 +2,7 @@
 import { InputField, SwitchListField } from "@/components/form-fields";
 import { useRouter } from "@/components/router";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { AuthPage, useUser } from "@stackframe/stack";
+import { AuthPage, useUser } from "@jshimko/stack";
 import { allProviders } from "@stackframe/stack-shared/dist/utils/oauth";
 import { runAsynchronouslyWithAlert, wait } from "@stackframe/stack-shared/dist/utils/promises";
 import { BrowserFrame, Button, Form, Separator, Typography } from "@stackframe/stack-ui";

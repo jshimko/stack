@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useUser } from "@stackframe/stack";
+import { useUser } from "@jshimko/stack";
 
 export default function Page() {
   const user = useUser({ or: 'redirect' });

@@ -1,7 +1,7 @@
 "use client";
 import EnvKeys from "@/components/env-keys";
 import { StyledLink } from "@/components/link";
-import { ApiKeyFirstView } from "@stackframe/stack";
+import { ApiKeyFirstView } from "@jshimko/stack";
 import { runAsynchronously } from "@stackframe/stack-shared/dist/utils/promises";
 import { ActionDialog, InlineCode, Typography } from "@stackframe/stack-ui";
 import { useEffect, useState } from "react";

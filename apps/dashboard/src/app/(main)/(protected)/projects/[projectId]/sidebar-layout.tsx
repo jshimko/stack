@@ -4,7 +4,7 @@ import { env } from "next-runtime-env";
 import { Link } from "@/components/link";
 import { ProjectSwitcher } from "@/components/project-switcher";
 import { cn } from "@/lib/utils";
-import { AdminProject, UserButton, useUser } from "@stackframe/stack";
+import { AdminProject, UserButton, useUser } from "@jshimko/stack";
 import { EMAIL_TEMPLATES_METADATA } from "@stackframe/stack-emails/dist/utils";
 import {
   Breadcrumb,

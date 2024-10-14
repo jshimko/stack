@@ -1,6 +1,6 @@
 'use client';
 import { useAdminApp } from '@/app/(main)/(protected)/projects/[projectId]/use-admin-app';
-import { ServerUser } from '@stackframe/stack';
+import { ServerUser } from "@jshimko/stack";
 import { jsonStringOrEmptySchema } from "@stackframe/stack-shared/dist/schema-fields";
 import { allProviders } from '@stackframe/stack-shared/dist/utils/oauth';
 import { deindent } from '@stackframe/stack-shared/dist/utils/strings';
@@ -160,7 +160,7 @@ function UserActions({ row }: { row: Row<ExtendedServerUser> }) {
               const session = await row.original.createSession({ expiresInMillis });
               const tokens = await session.getTokens();
               setImpersonateSnippet(deindent`
-                document.cookie = 'stack-refresh-${app.projectId}=${tokens.refreshToken}; expires=${expiresAtDate.toUTCString()}; path=/'; 
+                document.cookie = 'stack-refresh-${app.projectId}=${tokens.refreshToken}; expires=${expiresAtDate.toUTCString()}; path=/';
                 window.location.reload();
               `);
             }

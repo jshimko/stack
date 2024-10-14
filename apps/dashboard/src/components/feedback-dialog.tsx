@@ -1,4 +1,4 @@
-import { useUser } from "@stackframe/stack";
+import { useUser } from "@jshimko/stack";
 import * as yup from "yup";
 import { SmartFormDialog } from "./form-dialog";
 import { useToast } from "@stackframe/stack-ui";

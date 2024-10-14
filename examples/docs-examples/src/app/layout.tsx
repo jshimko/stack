@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { StackProvider } from "@stackframe/stack";
+import { StackProvider } from "@jshimko/stack";
 import { stackServerApp } from "src/stack";
 import Provider from "src/components/provider";
 import './global.css';

@@ -1,7 +1,7 @@
 'use client';
 import { useRouter } from "@/components/router";
 import { useFromNow } from '@/hooks/use-from-now';
-import { AdminProject } from '@stackframe/stack';
+import { AdminProject } from "@jshimko/stack";
 import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle, ClickableCard, Typography } from '@stackframe/stack-ui';
 
 export function ProjectCard({ project }: { project: AdminProject }) {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "@/components/router";
-import { StackAdminApp, useUser } from "@stackframe/stack";
+import { StackAdminApp, useUser } from "@jshimko/stack";
 import { StackAssertionError } from "@stackframe/stack-shared/dist/utils/errors";
 import { notFound } from "next/navigation";
 import React from "react";

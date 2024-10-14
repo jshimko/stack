@@ -1,4 +1,4 @@
-import { ServerUser } from "@stackframe/stack";
+import { ServerUser } from "@jshimko/stack";
 import { Shop } from "@/shop";
 import { stackServerApp } from "@/stack";
 

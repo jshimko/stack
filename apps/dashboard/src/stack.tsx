@@ -1,6 +1,6 @@
 import './polyfills';
 
-import { StackServerApp } from '@stackframe/stack';
+import { StackServerApp } from "@jshimko/stack";
 
 if (process.env.NEXT_PUBLIC_STACK_PROJECT_ID !== "internal") {
   throw new Error("This project is not configured correctly. stack-dashboard must always use the internal project.");

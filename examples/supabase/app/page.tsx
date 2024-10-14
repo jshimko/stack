@@ -1,7 +1,7 @@
 'use client';
 
 import { createSupabaseClient } from "@/utils/supabase-client";
-import { useStackApp, useUser } from "@stackframe/stack";
+import { useStackApp, useUser } from "@jshimko/stack";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -15,7 +15,7 @@ export default function Page() {
     supabase.from("data").select().then(({ data }) => setData(data ?? []));
   }, []);
 
-  const listContent = data === null ? 
+  const listContent = data === null ?
     <p>Loading...</p> :
     data.length === 0 ?
       <p>No notes found</p> :
@@ -24,12 +24,12 @@ export default function Page() {
   return (
     <div>
       {
-        user ? 
+        user ?
         <>
           <p>You are signed in</p>
           <p>User ID: {user.id}</p>
           <Link href={app.urls.signOut}>Sign Out</Link>
-        </> : 
+        </> :
         <Link href={app.urls.signIn}>Sign In</Link>
       }
       <h3>Supabase data</h3>

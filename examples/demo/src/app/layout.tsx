@@ -1,6 +1,6 @@
 import React from "react";
 import { Metadata } from "next";
-import { StackProvider, StackTheme } from "@stackframe/stack";
+import { StackProvider, StackTheme } from "@jshimko/stack";
 import { stackServerApp } from "src/stack";
 import Provider from "src/components/provider";
 import Header from "src/components/header";

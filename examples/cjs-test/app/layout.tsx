@@ -1,4 +1,4 @@
-const { StackProvider, StackTheme } = require("@stackframe/stack");
+const { StackProvider, StackTheme } = require("@jshimko/stack");
 const { stackServerApp } = require("../stack");
 require("./globals.css");
 

@@ -1,5 +1,5 @@
 import { env } from "next-runtime-env";
-import { StackHandler } from "@stackframe/stack";
+import { StackHandler } from "@jshimko/stack";
 import { stackServerApp } from "@/stack";
 import { StyledLink } from "@/components/link";
 

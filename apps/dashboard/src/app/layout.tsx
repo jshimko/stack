@@ -4,7 +4,7 @@ import { StyleLink } from '@/components/style-link';
 import { ThemeProvider } from '@/components/theme-provider';
 import { cn } from '@/lib/utils';
 import { stackServerApp } from '@/stack';
-import { StackProvider, StackTheme } from '@stackframe/stack';
+import { StackProvider, StackTheme } from "@jshimko/stack";
 import { getEnvVariable, getNodeEnvironment } from '@stackframe/stack-shared/dist/utils/env';
 import { PublicEnvScript, env } from "next-runtime-env";
 import { Toaster } from '@stackframe/stack-ui';

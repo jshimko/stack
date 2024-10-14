@@ -1,7 +1,7 @@
 'use client';
 
 import Link from "next/link";
-import { UserButton } from "@stackframe/stack";
+import { UserButton } from "@jshimko/stack";
 import { useTheme } from "next-themes";
 
 export default function Header() {

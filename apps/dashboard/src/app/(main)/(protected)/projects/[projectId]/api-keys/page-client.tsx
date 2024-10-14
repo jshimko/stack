@@ -3,7 +3,7 @@ import { ApiKeyTable } from "@/components/data-table/api-key-table";
 import EnvKeys from "@/components/env-keys";
 import { SmartFormDialog } from "@/components/form-dialog";
 import { SelectField } from "@/components/form-fields";
-import { ApiKeyFirstView } from "@stackframe/stack";
+import { ApiKeyFirstView } from "@jshimko/stack";
 import { ActionDialog, Button, Typography } from "@stackframe/stack-ui";
 import { useState } from "react";
 import * as yup from "yup";

@@ -2,7 +2,7 @@
 import { FormDialog } from "@/components/form-dialog";
 import { InputField, SwitchField } from "@/components/form-fields";
 import { SettingIconButton, SettingSwitch } from "@/components/settings";
-import { AdminProject } from "@stackframe/stack";
+import { AdminProject } from "@jshimko/stack";
 import { sharedProviders } from "@stackframe/stack-shared/dist/utils/oauth";
 import { runAsynchronously } from "@stackframe/stack-shared/dist/utils/promises";
 import { ActionDialog, Badge, InlineCode, Label, SimpleTooltip, Typography } from "@stackframe/stack-ui";

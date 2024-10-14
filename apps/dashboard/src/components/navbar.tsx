@@ -1,7 +1,7 @@
 'use client';
 
 import { env } from "next-runtime-env";
-import { UserButton } from "@stackframe/stack";
+import { UserButton } from "@jshimko/stack";
 import { Button, Typography } from "@stackframe/stack-ui";
 import { useTheme } from "next-themes";
 import { Link } from "./link";

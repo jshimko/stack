@@ -1,7 +1,7 @@
 "use client";
 import { SmartFormDialog } from "@/components/form-dialog";
 import { SettingCard, SettingSwitch } from "@/components/settings";
-import { AdminDomainConfig, AdminProject } from "@stackframe/stack";
+import { AdminDomainConfig, AdminProject } from "@jshimko/stack";
 import { urlSchema } from "@stackframe/stack-shared/dist/schema-fields";
 import { ActionCell, ActionDialog, Alert, Button, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Typography } from "@stackframe/stack-ui";
 import React from "react";

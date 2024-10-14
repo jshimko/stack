@@ -1,5 +1,5 @@
 import { FieldLabel } from "@/components/form-fields";
-import { AdminTeamPermissionDefinition, ServerTeam, ServerUser } from "@stackframe/stack";
+import { AdminTeamPermissionDefinition, ServerTeam, ServerUser } from "@jshimko/stack";
 import { generateSecureRandomString } from "@stackframe/stack-shared/dist/utils/crypto";
 import { throwErr } from "@stackframe/stack-shared/dist/utils/errors";
 import { Checkbox, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@stackframe/stack-ui";

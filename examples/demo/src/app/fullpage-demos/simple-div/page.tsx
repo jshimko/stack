@@ -1,4 +1,4 @@
-import { SignIn } from "@stackframe/stack";
+import { SignIn } from "@jshimko/stack";
 
 export default function SimpleDivFullPageDemo() {
   return (

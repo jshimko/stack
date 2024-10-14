@@ -1,6 +1,6 @@
 'use client';
 
-import { useUser } from "@stackframe/stack";
+import { useUser } from "@jshimko/stack";
 import { Button } from "@stackframe/stack-ui";
 import { useEffect, useState } from "react";
 

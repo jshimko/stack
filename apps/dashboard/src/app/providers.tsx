@@ -1,5 +1,5 @@
 'use client';
-import { useStackApp, useUser } from '@stackframe/stack';
+import { useStackApp, useUser } from "@jshimko/stack";
 import { env } from "next-runtime-env";
 import posthog from 'posthog-js';
 import { PostHogProvider } from 'posthog-js/react';

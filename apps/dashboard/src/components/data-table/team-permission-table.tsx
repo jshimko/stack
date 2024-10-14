@@ -1,6 +1,6 @@
 'use client';
 import { useAdminApp } from "@/app/(main)/(protected)/projects/[projectId]/use-admin-app";
-import { AdminTeamPermissionDefinition } from "@stackframe/stack";
+import { AdminTeamPermissionDefinition } from "@jshimko/stack";
 import { ActionCell, ActionDialog, BadgeCell, DataTable, DataTableColumnHeader, SearchToolbarItem, SimpleTooltip, TextCell } from "@stackframe/stack-ui";
 import { ColumnDef, Row, Table } from "@tanstack/react-table";
 import { useState } from "react";
