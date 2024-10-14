@@ -31,7 +31,3 @@ jobs:
         run: pnpm publish --no-git-checks --access public --filter @jshimko/stack
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - run: gh release create ${{ github.ref }} --title "@jshimko/stack ${{ github.ref_name }}" --body "```sh\npnpm i @jshimko/stack@${{ github.ref_name }}\n```"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
