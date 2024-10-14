@@ -1,11 +1,15 @@
 module.exports = {
-  extends: [],
+  extends: ["eslint:recommended", "plugin:@typescript-eslint/strict"],
   parser: "@typescript-eslint/parser",
   plugins: ["@typescript-eslint"],
   parserOptions: {
     // use the package folder as the root for the TS ESLint plugin
     project: "./tsconfig.json",
     tsconfigRootDir: process.cwd(),
+  },
+  env: {
+    browser: true,
+    node: true,
   },
   rules: {
     "no-unused-expressions": ["error", { enforceForJSX: true }],
@@ -35,6 +39,7 @@ module.exports = {
     "max-statements-per-line": "warn",
     semi: ["error", "always"],
     "no-fallthrough": "error",
+    "@typescript-eslint/no-explicit-any": "warn",
     "@typescript-eslint/switch-exhaustiveness-check": "error",
     "@typescript-eslint/no-floating-promises": [
       "error",
