@@ -28,7 +28,7 @@ jobs:
         run: pnpm build --filter @jshimko/stack
 
       - name: Publish
-        run: pnpm publish --access public --filter @jshimko/stack
+        run: pnpm publish --no-git-checks --access public --filter @jshimko/stack
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
