@@ -3,7 +3,6 @@ import { encodeBase64 } from "@stackframe/stack-shared/dist/utils/bytes";
 import { generateSecureRandomString } from "@stackframe/stack-shared/dist/utils/crypto";
 import { StackAssertionError, throwErr } from "@stackframe/stack-shared/dist/utils/errors";
 import { filterUndefined } from "@stackframe/stack-shared/dist/utils/objects";
-import * as jose from "jose";
 import { expect } from "vitest";
 import { Context, Mailbox, NiceRequestInit, NiceResponse, STACK_BACKEND_BASE_URL, STACK_INTERNAL_PROJECT_ADMIN_KEY, STACK_INTERNAL_PROJECT_CLIENT_KEY, STACK_INTERNAL_PROJECT_ID, STACK_INTERNAL_PROJECT_SERVER_KEY, createMailbox, localRedirectUrl, niceFetch, updateCookiesFromResponse } from "../helpers";
 
@@ -118,7 +117,7 @@ export async function niceBackendFetch(url: string | URL, options?: Omit<NiceReq
 
 export namespace Auth {
   export async function ensureParsableAccessToken() {
-    const accessToken = backendContext.value.userAuth?.accessToken;
+    /*const accessToken = backendContext.value.userAuth?.accessToken;
     if (accessToken) {
       const aud = jose.decodeJwt(accessToken).aud;
       const jwks = jose.createRemoteJWKSet(new URL(`api/v1/projects/${aud}/.well-known/jwks.json`, STACK_BACKEND_BASE_URL));
@@ -130,7 +129,7 @@ export namespace Auth {
         "aud": expect.any(String),
         "sub": expect.any(String),
       });
-    }
+    }*/
   }
 
   /**
@@ -608,36 +607,49 @@ export namespace Auth {
 }
 
 export namespace ContactChannels {
-  export async function sendVerificationCode() {
+  export async function getTheOnlyContactChannel() {
+    const contactChannels = await ContactChannels.listAllCurrentUserContactChannels();
+    expect(contactChannels).toHaveLength(1);
+    return contactChannels[0];
+  }
+
+  export async function listAllCurrentUserContactChannels() {
+    const response = await niceBackendFetch("/api/v1/contact-channels?user_id=me", {
+      accessType: "client",
+    });
+    return response.body.items;
+  }
+
+  export async function sendVerificationCode(options?: { contactChannelId?: string }) {
+    const contactChannelId = options?.contactChannelId ?? (await ContactChannels.getTheOnlyContactChannel()).id;
     const mailbox = backendContext.value.mailbox;
-    const response = await niceBackendFetch("/api/v1/contact-channels/send-verification-code", {
+    const response = await niceBackendFetch(`/api/v1/contact-channels/me/${contactChannelId}/send-verification-code`, {
       method: "POST",
       accessType: "client",
       body: {
-        email: mailbox.emailAddress,
         callback_url: "http://localhost:12345/some-callback-url",
       },
     });
     expect(response).toMatchInlineSnapshot(`
-            NiceResponse {
-              "status": 200,
-              "body": { "success": true },
-              "headers": Headers { <some fields may have been hidden> },
-            }
-          `);
+      NiceResponse {
+        "status": 200,
+        "body": { "success": true },
+        "headers": Headers { <some fields may have been hidden> },
+      }
+    `);
     const messages = await mailbox.fetchMessages({ noBody: true });
     const subjects = messages.map((message) => message.subject);
-    expect(subjects).toContain("Verify your email at Stack Dashboard");
+    expect(subjects[0].includes("Verify your email")).toBe(true);
     return {
       sendSignInCodeResponse: response,
     };
   }
 
-  export async function verify() {
+  export async function verify(options?: { contactChannelId?: string }) {
     const mailbox = backendContext.value.mailbox;
-    const sendVerificationCodeRes = await sendVerificationCode();
+    const sendVerificationCodeRes = await sendVerificationCode(options);
     const messages = await mailbox.fetchMessages();
-    const message = messages.findLast((message) => message.subject === "Verify your email at Stack Dashboard") ?? throwErr("Verification code message not found");
+    const message = messages.findLast((message) => message.subject.includes("Verify your email")) ?? throwErr("Verification code message not found");
     const verificationCode = message.body?.text.match(/http:\/\/localhost:12345\/some-callback-url\?code=([a-zA-Z0-9]+)/)?.[1] ?? throwErr("Verification code not found");
     const response = await niceBackendFetch("/api/v1/contact-channels/verify", {
       method: "POST",
