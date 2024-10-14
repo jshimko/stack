@@ -22,21 +22,24 @@ import dynamic from 'next/dynamic';
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { VersionAlerter } from '../components/version-alerter';
 
+const title = env('NEXT_PUBLIC_META_DEFAULT_TITLE') || 'Stack Auth Dashboard';
+const description = env('NEXT_PUBLIC_META_DESCRIPTION') || 'Stack Auth is the open-source Auth0 alternative, and the fastest way to add authentication to your web app.';
+
 export const metadata: Metadata = {
   metadataBase: new URL(env('NEXT_PUBLIC_STACK_URL') || ''),
   title: {
-    default: 'Stack Auth Dashboard',
-    template: '%s | Stack Auth',
+    default: title,
+    template: env('NEXT_PUBLIC_META_DEFAULT_TITLE_TEMPLATE') || '%s | Stack Auth',
   },
-  description: 'Stack Auth is the open-source Auth0 alternative, and the fastest way to add authentication to your web app.',
+  description,
   openGraph: {
-    title: 'Stack Auth Dashboard',
-    description: 'Stack Auth is the open-source Auth0 alternative, and the fastest way to add authentication to your web app.',
+    title,
+    description,
     images: [`${env("NEXT_PUBLIC_STACK_URL")}/open-graph-image.png`]
   },
   twitter: {
-    title: 'Stack Auth Dashboard',
-    description: 'Stack Auth is the open-source Auth0 alternative, and the fastest way to add authentication to your web app.',
+    title,
+    description,
     images: [`${env("NEXT_PUBLIC_STACK_URL")}/open-graph-image.png`]
   },
 };
