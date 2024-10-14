@@ -1,5 +1,6 @@
 'use client';
 
+import { env } from "next-runtime-env";
 import { UserButton } from "@stackframe/stack";
 import { Button, Typography } from "@stackframe/stack-ui";
 import { useTheme } from "next-themes";
@@ -9,6 +10,7 @@ import { FeedbackDialog } from "./feedback-dialog";
 
 export function Navbar({ ...props }) {
   const { resolvedTheme, setTheme } = useTheme();
+  const whiteLabelEnabled = env("NEXT_PUBLIC_WHITE_LABEL_ENABLED") === "true";
   return (
     <header
       className={`sticky top-0 z-30 flex items-center justify-between border-b bg-white dark:bg-black px-4 shrink-0 ${props.className || ""}`}
@@ -18,14 +20,16 @@ export function Navbar({ ...props }) {
         <Logo full height={24} href="/projects" className="h-6" />
       </div>
       <div className="flex items-center">
-        <div className="flex gap-4 mr-8 items-center">
-          <FeedbackDialog
-            trigger={<Button variant="outline" size='sm'>Feedback</Button>}
-          />
-          <Link href="https://docs.stack-auth.com/">
-            <Typography type='label'>Docs</Typography>
-          </Link>
-        </div>
+        {!whiteLabelEnabled && (
+          <div className="flex gap-4 mr-8 items-center">
+            <FeedbackDialog
+              trigger={<Button variant="outline" size='sm'>Feedback</Button>}
+            />
+            <Link href="https://docs.stack-auth.com/">
+              <Typography type='label'>Docs</Typography>
+            </Link>
+          </div>
+        )}
         <UserButton colorModeToggle={() => setTheme(resolvedTheme === 'light' ? 'dark' : 'light')}/>
       </div>
     </header>

@@ -1,6 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 import { BooleanTrue, PrismaClient } from '@prisma/client';
 import { hashPassword } from '@stackframe/stack-shared/dist/utils/password';
+import { generateUuid } from '@stackframe/stack-shared/dist/utils/uuids';
 
 const prisma = new PrismaClient();
 
@@ -30,8 +31,8 @@ async function seed() {
     const createdProject = await tx.project.create({
       data: {
         id: 'internal',
-        displayName: 'Stack Dashboard',
-        description: 'Stack\'s admin dashboard',
+        displayName: process.env.STACK_DEFAULT_PROJECT_NAME || 'Stack Dashboard',
+        description: process.env.STACK_DEFAULT_PROJECT_DESCRIPTION || 'Stack\'s admin dashboard',
         isProductionMode: false,
         apiKeySets: {
           create: [{
@@ -79,6 +80,53 @@ async function seed() {
 
     console.log('Internal project created');
 
+    const defaultProject = process.env.SELF_HOST_DEFAULT_PROJECT_NAME;
+
+    let appProject;
+
+    if (defaultProject) {
+      appProject = await tx.project.create({
+        data: {
+          id: generateUuid(),
+          displayName: defaultProject,
+          isProductionMode: false,
+          config: {
+            create: {
+              allowLocalhost: true,
+              signUpEnabled, // see STACK_SIGN_UP_DISABLED var above
+              emailServiceConfig: {
+                create: {
+                  proxiedEmailServiceConfig: {
+                    create: {}
+                  }
+                }
+              },
+              createTeamOnSignUp: true,
+              clientTeamCreationEnabled: false,
+              authMethodConfigs: {
+                create: [
+                  {
+                    otpConfig: {
+                      create: {
+                        contactChannelType: 'EMAIL',
+                      }
+                    }
+                  },
+                  {
+                    passwordConfig: {
+                      create: {},
+                    }
+                  },
+                ],
+              }
+            }
+          }
+        },
+      });
+
+      console.log(`${defaultProject} project created`);
+    }
+
     // Create optional default admin user if credentials are provided.
     // This user will be able to login to the dashboard with both email/password and magic link.
     if (adminEmail && adminPassword) {
@@ -86,7 +134,7 @@ async function seed() {
         data: {
           projectId: 'internal',
           displayName: adminDisplayName,
-          serverMetadata: { managedProjectIds: ['internal'] }
+          serverMetadata: { managedProjectIds: ['internal', appProject?.id].filter(Boolean) as string[] }
         }
       });
 

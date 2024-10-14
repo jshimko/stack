@@ -1,5 +1,6 @@
 'use client';
 
+import { env } from "next-runtime-env";
 import { Link } from "@/components/link";
 import { ProjectSwitcher } from "@/components/project-switcher";
 import { cn } from "@/lib/utils";
@@ -259,19 +260,21 @@ function SidebarContent({ projectId, onNavigate }: { projectId: string, onNaviga
 
         <div className="flex-grow"/>
 
-        <div className="py-2 px-2 flex">
-          <NavItem
-            onClick={onNavigate}
-            item={{
-              name: "Documentation",
-              type: "item",
-              href: "",
-              icon: Book,
-              regex: /^$/,
-            }}
-            href={"https://docs.stack-auth.com/"}
-          />
-        </div>
+        {env("NEXT_PUBLIC_WHITE_LABEL_ENABLED") !== "true" && (
+          <div className="py-2 px-2 flex">
+            <NavItem
+              onClick={onNavigate}
+              item={{
+                name: "Documentation",
+                type: "item",
+                href: "",
+                icon: Book,
+                regex: /^$/,
+              }}
+              href={"https://docs.stack-auth.com/"}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
@@ -396,9 +399,11 @@ export default function SidebarLayout(props: { projectId: string, children?: Rea
           </div>
 
           <div className="flex gap-4">
-            <FeedbackDialog
-              trigger={<Button variant="outline" size='sm'>Feedback</Button>}
-            />
+            {env("NEXT_PUBLIC_WHITE_LABEL_ENABLED") !== "true" && (
+              <FeedbackDialog
+                trigger={<Button variant="outline" size='sm'>Feedback</Button>}
+              />
+            )}
             <UserButton colorModeToggle={() => setTheme(resolvedTheme === 'light' ? 'dark' : 'light')} />
           </div>
         </div>

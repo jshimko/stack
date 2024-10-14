@@ -1,8 +1,8 @@
-import { stackServerApp } from "@/stack";
 import { redirect } from "next/navigation";
+import { env } from "next-runtime-env";
+import { stackServerApp } from "@/stack";
 import Footer from "./footer";
 import PageClient from "./page-client";
-import { neverResolve } from "@stackframe/stack-shared/dist/utils/promises";
 
 export const metadata = {
   title: "Projects",
@@ -20,7 +20,7 @@ export default async function Page() {
   return (
     <>
       <PageClient />
-      <Footer />
+      {env("NEXT_PUBLIC_WHITE_LABEL_ENABLED") !== "true" && <Footer />}
     </>
   );
 }

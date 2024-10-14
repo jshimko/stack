@@ -1,7 +1,8 @@
 "use client";
 
+import { env } from "next-runtime-env";
 import { runAsynchronously } from "@stackframe/stack-shared/dist/utils/promises";
-import { useEffect, useState, version } from "react";
+import { useEffect, useState } from "react";
 import packageJson from "../../package.json";
 import { wait } from "@stackframe/stack-shared/dist/utils/promises";
 
@@ -10,7 +11,6 @@ import { wait } from "@stackframe/stack-shared/dist/utils/promises";
  */
 export function VersionAlerter({ severeOnly }: { severeOnly: boolean }) {
   const [versionCheckResult, setVersionCheckResult] = useState<{ severe: boolean, error: string } | null>(null);
-  const [error, setError] = useState<string | null>(null);
 
   // IMPORTANT: THIS ENVIRONMENT VARIABLE IS UNDOCUMENTED AND NOT MEANT FOR PRODUCTION USAGE
   // AND YOU SHOULD ALWAYS KEEP STACK AUTH UP TO DATE. WE CAN'T APPLY SECURITY UPDATES IF
@@ -18,6 +18,9 @@ export function VersionAlerter({ severeOnly }: { severeOnly: boolean }) {
   const enableNonSevereVersionCheck = process.env.NEXT_PUBLIC_VERSION_ALERTER_SEVERE_ONLY !== "true";
 
   useEffect(() => {
+    if (env("NEXT_PUBLIC_VERSION_ALERTER_ENABLED") !== "true") {
+      return;
+    }
     if (window.location.origin === "https://app.stack-auth.com") {
       // save ourselves one request for the managed hosting
       // note: if you're self-hosting and you want to disable the check, set the envvar
