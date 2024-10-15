@@ -1,0 +1,3 @@
+# Prevent Prettier from formatting anything in this project
+# because every saved file leads to tons of unintentional changes.
+**
