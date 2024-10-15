@@ -31,8 +31,8 @@ async function seed() {
     const createdProject = await tx.project.create({
       data: {
         id: 'internal',
-        displayName: process.env.STACK_DEFAULT_PROJECT_NAME || 'Stack Dashboard',
-        description: process.env.STACK_DEFAULT_PROJECT_DESCRIPTION || 'Stack\'s admin dashboard',
+        displayName: process.env.STACK_DEFAULT_INTERNAL_PROJECT_NAME || 'Internal',
+        description: process.env.STACK_DEFAULT_INTERNAL_PROJECT_DESCRIPTION || 'Internal project for self-hosted deployments',
         isProductionMode: false,
         apiKeySets: {
           create: [{
