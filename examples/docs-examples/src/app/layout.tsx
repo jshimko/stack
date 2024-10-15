@@ -1,8 +1,11 @@
 import { Metadata } from "next";
+import { Inter } from 'next/font/google';
 import { StackProvider } from "@jshimko/stack";
 import { stackServerApp } from "src/stack";
 import Provider from "src/components/provider";
 import './global.css';
+
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Stack Demo',
@@ -15,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode,
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={inter.className}>
       <head />
       <body suppressHydrationWarning>
         <StackProvider
