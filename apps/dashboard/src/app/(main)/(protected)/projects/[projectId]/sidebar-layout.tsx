@@ -1,6 +1,7 @@
 'use client';
 
 import { env } from "next-runtime-env";
+import { FeedbackDialog } from "@/components/feedback-dialog";
 import { Link } from "@/components/link";
 import { ProjectSwitcher } from "@/components/project-switcher";
 import { cn } from "@/lib/utils";
@@ -38,7 +39,6 @@ import { useTheme } from "next-themes";
 import { usePathname } from "next/navigation";
 import { Fragment, useMemo, useState } from "react";
 import { useAdminApp } from "./use-admin-app";
-import { FeedbackDialog } from "@/components/feedback-dialog";
 
 type BreadcrumbItem = { item: React.ReactNode, href: string }
 
@@ -343,7 +343,9 @@ function HeaderBreadcrumb({
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <Link href={`/projects/${projectId}`}>{selectedProject?.displayName}</Link>
+            <span className="max-w-40 truncate">
+              <Link href={`/projects/${projectId}`}>{selectedProject?.displayName}</Link>
+            </span>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           {breadcrumbItems.map((name, index) => (
